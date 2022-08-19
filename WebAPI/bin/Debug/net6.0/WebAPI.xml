@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WebAPI</name>
+    </assembly>
+    <members>
+        <member name="T:WebAPI.Controllers.WeatherForecastController">
+            <summary>
+            Weather API
+            </summary>
+        </member>
+        <member name="M:WebAPI.Controllers.WeatherForecastController.Get">
+            <summary>
+            Accede al pronostico del clima
+            </summary>
+            <returns>Devuelve una lista del pronostico de los proximos dias</returns>
+            <response code="200">Devuelve el pronostico de los proximos dias</response>
+            <response code="500">Hubo un error al obtener configuracion</response>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WebAPI</name>
+    </assembly>
+    <members>
+        <member name="M:WebAPI.Controllers.StreetController.Index">
+            <summary>
+            Lista de calles
+            </summary>
+            <response code="200">Exito</response>
+            <response code="401">No autorizado</response>
+            <response code="500">Error del servidor</response>
+        </member>
+        <member name="M:WebAPI.Controllers.StreetController.Details(System.Int32)">
+            <summary>
+            Detalle de una calle
+            </summary>
+            <response code="200">Exito</response>
+            <response code="401">No autorizado</response>
+            <response code="404">Calle no encontrada</response>
+            <response code="500">Error del servidor</response>
+        </member>
+        <member name="M:WebAPI.Controllers.StreetController.Create(Models.Street)">
+            <summary>
+            Creacion de una calle
+            </summary>
+            <param name="street">Street</param>
+            <response code="200">Exito</response>
+            <response code="400">La calle no tiene el formato correcto</response>
+            <response code="401">No autorizado</response>
+            <response code="500">Error del servidor</response>
+        </member>
+        <member name="M:WebAPI.Controllers.StreetController.Edit(System.Int32,Models.Street)">
+            <summary>
+            Editar una calle
+            </summary>
+            <param name="street">Street</param>
+            <response code="200">Exito</response>
+            <response code="400">La calle no tiene el formato correcto</response>
+            <response code="401">No autorizado</response>
+            <response code="404">Calle no encontrada</response>
+            <response code="500">Error del servidor</response>
+        </member>
+        <member name="M:WebAPI.Controllers.StreetController.Delete(System.Int32)">
+            <summary>
+            Eliminar una calle
+            </summary>
+            <response code="200">Exito</response>
+            <response code="401">No autorizado</response>
+            <response code="404">Calle no encontrada</response>
+            <response code="500">Error del servidor</response>
+        </member>
+        <member name="M:WebAPI.Controllers.UserController.Login(System.String,System.String)">
+            <summary>
+            Logueo de usuario
+            </summary>
+            <response code="200">Exito</response>
+            <response code="400">Peticion incorrecta</response>
+            <response code="500">Error del servidor</response>
+        </member>
+        <member name="M:WebAPI.Controllers.WeatherForecastController.Get">
+            <summary>
+            Pronostico del clima
+            </summary>
+            <response code="200">Exito</response>
+            <response code="500">Error del servidor</response>
+        </member>
+    </members>
+</doc>

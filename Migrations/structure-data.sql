@@ -12,4 +12,3 @@ INSERT INTO streets VALUES(5, 'Pellegrini', 'Rosario');
 INSERT INTO streets VALUES(6, 'Sarmiento', 'Posadas');
 INSERT INTO streets VALUES(7, 'San Martin', 'Posadas');
 
-SELECT * FROM streets;

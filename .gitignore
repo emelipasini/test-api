@@ -1,3 +1,6 @@
 WebAPI/bin/net6.0/appsettings.Development.json
 WebAPI/bin/net6.0/appsettings.json
 
+WebAPI/appsettings.Development.json
+WebAPI/appsettings.json
+

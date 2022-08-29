@@ -6,7 +6,7 @@
     <members>
         <member name="M:WebAPI.Controllers.StreetController.Index">
             <summary>
-            Lista de calles
+            Listado de calles
             </summary>
             <response code="200">Exito</response>
             <response code="401">No autorizado</response>
@@ -35,6 +35,7 @@
             <summary>
             Editar una calle
             </summary>
+            <param name="id">Street</param>
             <param name="street">Street</param>
             <response code="200">Exito</response>
             <response code="400">La calle no tiene el formato correcto</response>

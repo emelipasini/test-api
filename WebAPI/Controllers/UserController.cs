@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Mvc;
+
+using System.IdentityModel.Tokens.Jwt;
 using System.Text;
+
 using Models;
 
 namespace WebAPI.Controllers
@@ -65,8 +67,8 @@ namespace WebAPI.Controllers
         {
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:SecretKey"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var issuer = Configuration["JWT:Issuer"];
-            var audience = Configuration["JWT:Audience"];
+            var issuer = Configuration["AppSettings:Issuer"];
+            var audience = Configuration["AppSettings:Audience"];
             var jwtValidity = DateTime.Now.AddMinutes(Convert.ToDouble(Configuration["JWT:TokenExpiry"]));
 
             var token = new JwtSecurityToken(issuer,

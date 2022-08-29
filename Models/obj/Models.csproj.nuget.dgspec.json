@@ -44,9 +44,29 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "AutoWrapper.Core": {
+              "target": "Package",
+              "version": "[4.5.0, )"
+            },
             "EntityFramework": {
               "target": "Package",
               "version": "[6.4.4, )"
+            },
+            "EntityFramework6.Npgsql": {
+              "target": "Package",
+              "version": "[6.4.3, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.8, )"
+            },
+            "Microsoft.EntityFrameworkCore.Relational": {
+              "target": "Package",
+              "version": "[6.0.8, )"
+            },
+            "Npgsql": {
+              "target": "Package",
+              "version": "[6.0.6, )"
             }
           },
           "imports": [

@@ -1,32 +1,58 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using AutoWrapper.Extensions;
 using Microsoft.AspNetCore.Mvc;
+
 using Models;
 
 namespace WebAPI.Controllers
 {
     [ApiController]
     [Route("streets")]
-    [Authorize]
+    //[Authorize]
     public class StreetController : Controller
     {
+        public readonly string Entity = "Streets";
 
-        public static List<Street> AllStreets = new List<Street>
+        private readonly APIDbContext context;
+        public StreetController(APIDbContext context)
         {
-            new Street(1, "Rivadavia", "Rosario"),
-            new Street(2, "Laprida", "Rosario"),
-            new Street(3, "Uruguay", "Rosario")
-        };
+            this.context = context;
+        }
+
+        [NonAction]
+        private void AddLog(string action, string message)
+        {
+            try
+            {
+                int lastId = context.Logs.Max(p => p.Id);
+                context.Logs.Add(new Log(lastId + 1, Entity, action, message));
+                context.SaveChanges();
+            }
+            catch (Exception err)
+            {
+                Console.WriteLine(err.Message);
+            }
+        }
 
         /// <summary>
-        /// Lista de calles
+        /// Listado de calles
         /// </summary>
         /// <response code="200">Exito</response>
         /// <response code="401">No autorizado</response>
         /// <response code="500">Error del servidor</response>
         [HttpGet]
-        public JsonResult Index()
+        public IActionResult Index()
         {
-            return new JsonResult(AllStreets);
+            try
+            {
+                var streets = context.Streets.ToList();
+                return Ok(new Response(200, false, "Peticion exitosa", streets));
+            }
+            catch(Exception err)
+            {
+                AddLog("GetAll", err.Message);
+                return StatusCode(500, new Response(500, true, "Hubo un error al completar la transaccion. ", err));
+            }
         }
 
         /// <summary>
@@ -36,21 +62,25 @@ namespace WebAPI.Controllers
         /// <response code="401">No autorizado</response>
         /// <response code="404">Calle no encontrada</response>
         /// <response code="500">Error del servidor</response>
-        [HttpGet("details/{id}")]
-        public JsonResult Details(int id)
+        [HttpGet("{id}")]
+        public IActionResult Details(int id)
         {
-            var street = AllStreets.FirstOrDefault(x => x.Id == id);
-            if (street == null)
+            try
             {
-                var result = new JsonResult("Calle no encontrada");
-                result.StatusCode = 404;
-                return result;
-            } else
+                var street = context.Streets.FirstOrDefault(x => x.Id == id);
+                if (street != null)
+                {
+                    return Ok(new Response(200, false, "Peticion exitosa", street));
+                }
+                return StatusCode(404, new Response(404, true, $"No existe el registro con id: {id}.", ""));
+            }
+            catch (Exception err)
             {
-                return new JsonResult(street);
+                AddLog("GetDetail", err.Message);
+                return StatusCode(500, new Response(500, true, "Hubo un error al completar la transaccion.", err));
             }
         }
-
+        
         /// <summary>
         /// Creacion de una calle
         /// </summary>
@@ -60,67 +90,62 @@ namespace WebAPI.Controllers
         /// <response code="401">No autorizado</response>
         /// <response code="500">Error del servidor</response>
         [HttpPost]
-        public JsonResult Create(Street street)
+        public IActionResult Create(Street street)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    AllStreets.Add(street);
-                    return new JsonResult(street);
+                    context.Streets.Add(street);
+                    context.SaveChanges();
+                    return Ok(new Response(200, false, "Peticion exitosa", street));
                 }
-                var result = new JsonResult("Formato invalido");
-                result.StatusCode = 400;
-                return result;
+                return StatusCode(400, new Response(400, true, "Peticion incorrecta", ModelState.AllErrors()));
             }
             catch(Exception err)
             {
-                return new JsonResult("Hubo un error al crear la calle. " + err);
+                AddLog("Create", err.Message);
+                return StatusCode(500, new Response(500, true, "Hubo un error al completar la transaccion.", err));
             }
-
         }
-
+        
         /// <summary>
         /// Editar una calle
         /// </summary>
+        /// <param name="id">Street</param>
         /// <param name="street">Street</param>
         /// <response code="200">Exito</response>
         /// <response code="400">La calle no tiene el formato correcto</response>
         /// <response code="401">No autorizado</response>
         /// <response code="404">Calle no encontrada</response>
         /// <response code="500">Error del servidor</response>
-        [HttpPost("edit/{id}")]
-        public JsonResult Edit(int id, Street street)
+        [HttpPut("{id}")]
+        public IActionResult Edit(int id, Street street)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var streetToEdit = AllStreets.FirstOrDefault(x => x.Id == id);
+                    var streetToEdit = context.Streets.FirstOrDefault(x => x.Id == id);
                     if(streetToEdit != null)
                     {
-                        var index = AllStreets.IndexOf(streetToEdit);
-                        AllStreets[index] = street;
-                        return new JsonResult(street);
-                    } else
-                    {
-                        var result = new JsonResult("Calle no encontrada");
-                        result.StatusCode = 404;
-                        return result;
+                        streetToEdit.Name = street.Name;
+                        streetToEdit.City = street.City;
+                        context.SaveChanges();
+
+                        return Ok(new Response(200, false, "Peticion exitosa", street));
                     }
-                } else
-                {
-                    var result = new JsonResult("Formato invalido");
-                    result.StatusCode = 400;
-                    return result;
+                    return StatusCode(404, new Response(404, true, $"No existe el registro con id: {id}.", ""));
                 }
+                return StatusCode(400, new Response(400, true, "Peticion incorrecta", ModelState.AllErrors()));
             }
             catch(Exception err)
             {
-                return new JsonResult("Hubo un error al editar la calle. " + err);
+                AddLog("Update", err.Message);
+                return StatusCode(500, new Response(500, true, "Hubo un error al completar la transaccion.", err));
             }
         }
-
+        
         /// <summary>
         /// Eliminar una calle
         /// </summary>
@@ -129,26 +154,23 @@ namespace WebAPI.Controllers
         /// <response code="404">Calle no encontrada</response>
         /// <response code="500">Error del servidor</response>
         [HttpDelete("{id}")]
-        public JsonResult Delete(int id)
+        public IActionResult Delete(int id)
         {
             try
             {
-                var streetToDelete = AllStreets.FirstOrDefault(x => x.Id == id);
+                var streetToDelete = context.Streets.FirstOrDefault(x => x.Id == id);
                 if (streetToDelete != null)
                 {
-                    AllStreets.Remove(streetToDelete);
-                    return new JsonResult("Calle eliminada");
+                    context.Streets.Remove(streetToDelete);
+                    context.SaveChanges();
+                    return Ok(new Response(200, false, "Peticion exitosa", streetToDelete));
                 }
-                else
-                {
-                    var result = new JsonResult("Calle no encontrada");
-                    result.StatusCode = 404;
-                    return result;
-                }
+                return StatusCode(404, new Response(404, true, $"No existe el registro con id: {id}.", ""));
             }
             catch (Exception err)
             {
-                return new JsonResult("Hubo un error al eliminar la calle. " + err);
+                AddLog("Delete", err.Message);
+                return StatusCode(500, new Response(500, true, "Hubo un error al completar la transaccion.", err));
             }
         }
     }

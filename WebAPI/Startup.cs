@@ -7,7 +7,9 @@ using System.Reflection;
 using System.Text;
 
 using Swashbuckle.AspNetCore.Filters;
-using Newtonsoft.Json.Serialization;
+
+using WebAPI.Contracts;
+using WebAPI.Services;
 
 namespace WebAPI
 {
@@ -22,13 +24,10 @@ namespace WebAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews().AddNewtonsoftJson(options =>
-                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-            ).AddNewtonsoftJson(options =>
-                options.SerializerSettings.ContractResolver = new DefaultContractResolver()
-            );
             services.AddControllers();
             services.AddEndpointsApiExplorer();
+
+            services.AddScoped<IStreetService, StreetService>();
 
             var connectionString = Configuration["ConnectionStrings:Connection"];
             services.AddDbContext<APIDbContext>(options =>
@@ -63,11 +62,11 @@ namespace WebAPI
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("v1", new OpenApiInfo
+                options.SwaggerDoc("v2", new OpenApiInfo
                 {
-                    Version = "v1",
-                    Title = "Prueba API",
-                    Description = "Una API de prueba",
+                    Version = "2.0.0",
+                    Title = "API de prueba",
+                    Description = "Esta es una descripcion de prueba",
                     Contact = new OpenApiContact
                     {
                         Name = "Geosystems S.A.",
@@ -79,7 +78,7 @@ namespace WebAPI
 
                 options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                 {
-                    Description = "Autorizacion estandar, Usar Bearer. Ejemplo \"bearer {token}\"",
+                    Description = "Escriba bearer y pegue el token de login separado por un espacio \"bearer {token}\"",
                     In = ParameterLocation.Header,
                     Name = "Authorization",
                     Type = SecuritySchemeType.ApiKey,
@@ -109,20 +108,12 @@ namespace WebAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Prueba API v1");
+                    c.SwaggerEndpoint("/swagger/v2/swagger.json", "Prueba API v2");
                     c.InjectStylesheet("/swagger-ui/custom.css");
                 });
             }
 
             app.UseHttpsRedirection();
-    
-            /*
-            app.UseCors(x => x
-                .SetIsOriginAllowed(origin => true)
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .AllowCredentials());
-            */
         }
     }
 }

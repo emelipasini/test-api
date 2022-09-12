@@ -2,21 +2,6 @@
   "version": 3,
   "targets": {
     "net6.0": {
-      "AutoWrapper.Core/4.5.0": {
-        "type": "package",
-        "dependencies": {
-          "Newtonsoft.Json": "12.0.2"
-        },
-        "compile": {
-          "lib/netcoreapp3.1/AutoWrapper.dll": {}
-        },
-        "runtime": {
-          "lib/netcoreapp3.1/AutoWrapper.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
-      },
       "EntityFramework/6.4.4": {
         "type": "package",
         "dependencies": {
@@ -1101,57 +1086,10 @@
             "rid": "win"
           }
         }
-      },
-      "Mapper/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v6.0",
-        "dependencies": {
-          "Microsoft.EntityFrameworkCore": "6.0.8",
-          "Microsoft.EntityFrameworkCore.Relational": "6.0.8",
-          "Models": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/Mapper.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Mapper.dll": {}
-        }
-      },
-      "Models/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v6.0",
-        "dependencies": {
-          "AutoWrapper.Core": "4.5.0",
-          "EntityFramework": "6.4.4",
-          "EntityFramework6.Npgsql": "6.4.3",
-          "Microsoft.EntityFrameworkCore": "6.0.8",
-          "Microsoft.EntityFrameworkCore.Relational": "6.0.8",
-          "Npgsql": "6.0.6"
-        },
-        "compile": {
-          "bin/placeholder/Models.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Models.dll": {}
-        }
       }
     }
   },
   "libraries": {
-    "AutoWrapper.Core/4.5.0": {
-      "sha512": "GPI1nlVBd4kvz5gIFrMt/PITHuzhpD79PzuXZ/+lNbqHRWREgom1IaLXOwTXFIzkVdKYIcFXvbu2qKxTMy18tQ==",
-      "type": "package",
-      "path": "autowrapper.core/4.5.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "autowrapper.core.4.5.0.nupkg.sha512",
-        "autowrapper.core.nuspec",
-        "icon.png",
-        "lib/netcoreapp3.0/AutoWrapper.dll",
-        "lib/netcoreapp3.1/AutoWrapper.dll"
-      ]
-    },
     "EntityFramework/6.4.4": {
       "sha512": "yj1+/4tci7Panu3jKDHYizxwVm0Jvm7b7m057b5h4u8NUHGCR8WIWirBTw+8EptRffwftIWPBeIRGNKD1ewEMQ==",
       "type": "package",
@@ -3162,24 +3100,12 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
-    },
-    "Mapper/1.0.0": {
-      "type": "project",
-      "path": "../Mapper/Mapper.csproj",
-      "msbuildProject": "../Mapper/Mapper.csproj"
-    },
-    "Models/1.0.0": {
-      "type": "project",
-      "path": "../Models/Models.csproj",
-      "msbuildProject": "../Models/Models.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "AutoWrapper.Core >= 4.5.0",
       "EntityFramework >= 6.4.4",
       "EntityFramework6.Npgsql >= 6.4.3",
-      "Mapper >= 1.0.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 6.0.8",
       "Microsoft.AspNetCore.Mvc.NewtonsoftJson >= 6.0.8",
       "Microsoft.EntityFrameworkCore >= 6.0.8",
@@ -3187,7 +3113,6 @@
       "Microsoft.EntityFrameworkCore.Relational >= 6.0.8",
       "Microsoft.EntityFrameworkCore.Tools >= 6.0.8",
       "Microsoft.VisualStudio.Azure.Containers.Tools.Targets >= 1.17.0",
-      "Models >= 1.0.0",
       "Npgsql >= 6.0.6",
       "Npgsql.EntityFrameworkCore.PostgreSQL >= 6.0.6",
       "Swashbuckle.AspNetCore >= 6.4.0",
@@ -3226,14 +3151,7 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {
-            "C:\\Users\\emeli\\Documents\\gs\\test-api\\Mapper\\Mapper.csproj": {
-              "projectPath": "C:\\Users\\emeli\\Documents\\gs\\test-api\\Mapper\\Mapper.csproj"
-            },
-            "C:\\Users\\emeli\\Documents\\gs\\test-api\\Models\\Models.csproj": {
-              "projectPath": "C:\\Users\\emeli\\Documents\\gs\\test-api\\Models\\Models.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {
@@ -3246,10 +3164,6 @@
       "net6.0": {
         "targetAlias": "net6.0",
         "dependencies": {
-          "AutoWrapper.Core": {
-            "target": "Package",
-            "version": "[4.5.0, )"
-          },
           "EntityFramework": {
             "target": "Package",
             "version": "[6.4.4, )"

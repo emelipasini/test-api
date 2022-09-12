@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
-using Models;
+using WebAPI.Models;
 
 namespace WebAPI.Controllers
 {
@@ -34,7 +34,7 @@ namespace WebAPI.Controllers
         /// <response code="500">Error del servidor</response>
         [AllowAnonymous]
         [HttpPost("login")]
-        public JsonResult Login(string username, string password)
+        public IActionResult Login(string username, string password)
         {
             try
             {
@@ -43,18 +43,20 @@ namespace WebAPI.Controllers
                 {
                     var token = BuildJWTToken();
                     SetTokenCookie(token);
-                    return new JsonResult(token);
+                    return Ok(token);
                 }
-                var result = new JsonResult("Credenciales incorrectas");
-                result.StatusCode = 400;
-                return result;
+                return BadRequest("Credenciales incorrectas");
             }
             catch (Exception err)
             {
-                return new JsonResult("Hubo un error al loguear el usuario. " + err);
+                return Problem($"Hubo un error al loguear el usuario. {err}");
             }
         }
 
+        /// <summary>
+        /// Uso de testeo
+        /// </summary>
+        /// <response code="200">Exito</response>
         [AllowAnonymous]
         [HttpPost("refresh-token")]
         public IActionResult RefreshToken()

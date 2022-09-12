@@ -8,10 +8,8 @@
     ".NETCoreApp,Version=v6.0": {
       "WebAPI/1.0.0": {
         "dependencies": {
-          "AutoWrapper.Core": "4.5.0",
           "EntityFramework": "6.4.4",
           "EntityFramework6.Npgsql": "6.4.3",
-          "Mapper": "1.0.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "6.0.8",
           "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "6.0.8",
           "Microsoft.EntityFrameworkCore": "6.0.8",
@@ -19,7 +17,6 @@
           "Microsoft.EntityFrameworkCore.Relational": "6.0.8",
           "Microsoft.EntityFrameworkCore.Tools": "6.0.8",
           "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": "1.17.0",
-          "Models": "1.0.0",
           "Npgsql": "6.0.6",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "6.0.6",
           "Swashbuckle.AspNetCore": "6.4.0",
@@ -28,17 +25,6 @@
         },
         "runtime": {
           "WebAPI.dll": {}
-        }
-      },
-      "AutoWrapper.Core/4.5.0": {
-        "dependencies": {
-          "Newtonsoft.Json": "13.0.1"
-        },
-        "runtime": {
-          "lib/netcoreapp3.1/AutoWrapper.dll": {
-            "assemblyVersion": "4.5.0.0",
-            "fileVersion": "4.5.0.0"
-          }
         }
       },
       "EntityFramework/6.4.4": {
@@ -642,29 +628,6 @@
             "fileVersion": "4.700.19.56404"
           }
         }
-      },
-      "Mapper/1.0.0": {
-        "dependencies": {
-          "Microsoft.EntityFrameworkCore": "6.0.8",
-          "Microsoft.EntityFrameworkCore.Relational": "6.0.8",
-          "Models": "1.0.0"
-        },
-        "runtime": {
-          "Mapper.dll": {}
-        }
-      },
-      "Models/1.0.0": {
-        "dependencies": {
-          "AutoWrapper.Core": "4.5.0",
-          "EntityFramework": "6.4.4",
-          "EntityFramework6.Npgsql": "6.4.3",
-          "Microsoft.EntityFrameworkCore": "6.0.8",
-          "Microsoft.EntityFrameworkCore.Relational": "6.0.8",
-          "Npgsql": "6.0.6"
-        },
-        "runtime": {
-          "Models.dll": {}
-        }
       }
     }
   },
@@ -673,13 +636,6 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
-    },
-    "AutoWrapper.Core/4.5.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-GPI1nlVBd4kvz5gIFrMt/PITHuzhpD79PzuXZ/+lNbqHRWREgom1IaLXOwTXFIzkVdKYIcFXvbu2qKxTMy18tQ==",
-      "path": "autowrapper.core/4.5.0",
-      "hashPath": "autowrapper.core.4.5.0.nupkg.sha512"
     },
     "EntityFramework/6.4.4": {
       "type": "package",
@@ -1142,16 +1098,6 @@
       "sha512": "sha512-CeWTdRNfRaSh0pm2gDTJFwVaXfTq6Xwv/sA887iwPTneW7oMtMlpvDIO+U60+3GWTB7Aom6oQwv5VZVUhQRdPQ==",
       "path": "system.windows.extensions/4.7.0",
       "hashPath": "system.windows.extensions.4.7.0.nupkg.sha512"
-    },
-    "Mapper/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "Models/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
     }
   }
 }

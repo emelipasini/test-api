@@ -1,10 +1,9 @@
 {
   "version": 2,
-  "dgSpecHash": "wzzRtM5+xKwwZn5kKDr/o3fIhPwOUGiK4vGqJLhNtVIef6508KnkI7x4ZtwWctTYVMjrOtDmCf9SQTFMk7blIA==",
+  "dgSpecHash": "Mg8reWwCyKY/UHIQ/fuhbWSl5fxK62igQk52uQ8JoJMj9v6thQfgltgJwDoizl+kdmWK5jH+QAWVMzbOnmvUcA==",
   "success": true,
   "projectFilePath": "C:\\Users\\emeli\\Documents\\gs\\test-api\\WebAPI\\WebAPI.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\emeli\\.nuget\\packages\\autowrapper.core\\4.5.0\\autowrapper.core.4.5.0.nupkg.sha512",
     "C:\\Users\\emeli\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\emeli\\.nuget\\packages\\entityframework6.npgsql\\6.4.3\\entityframework6.npgsql.6.4.3.nupkg.sha512",
     "C:\\Users\\emeli\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",

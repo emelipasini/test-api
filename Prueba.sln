@@ -5,10 +5,6 @@ VisualStudioVersion = 17.3.32804.467
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "WebAPI\WebAPI.csproj", "{4B160EF3-0F46-498A-B879-14E6BA35847D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{829CBB13-4342-4EF1-BB0C-9FAD563696D7}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mapper", "Mapper\Mapper.csproj", "{A5EEBC7C-C795-4AE9-922F-AC5CA42041C0}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,14 +15,6 @@ Global
 		{4B160EF3-0F46-498A-B879-14E6BA35847D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B160EF3-0F46-498A-B879-14E6BA35847D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4B160EF3-0F46-498A-B879-14E6BA35847D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{829CBB13-4342-4EF1-BB0C-9FAD563696D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{829CBB13-4342-4EF1-BB0C-9FAD563696D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{829CBB13-4342-4EF1-BB0C-9FAD563696D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{829CBB13-4342-4EF1-BB0C-9FAD563696D7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A5EEBC7C-C795-4AE9-922F-AC5CA42041C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A5EEBC7C-C795-4AE9-922F-AC5CA42041C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A5EEBC7C-C795-4AE9-922F-AC5CA42041C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A5EEBC7C-C795-4AE9-922F-AC5CA42041C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

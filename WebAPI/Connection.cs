@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-using Models;
-using Mapper;
+using WebAPI.Models;
+using WebAPI.Mapper;
 
 namespace WebAPI
 {

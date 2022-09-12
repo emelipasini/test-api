@@ -4,7 +4,7 @@
         <name>WebAPI</name>
     </assembly>
     <members>
-        <member name="M:WebAPI.Controllers.StreetController.Index">
+        <member name="M:WebAPI.Controllers.StreetController.GetAll">
             <summary>
             Listado de calles
             </summary>
@@ -12,35 +12,35 @@
             <response code="401">No autorizado</response>
             <response code="500">Error del servidor</response>
         </member>
-        <member name="M:WebAPI.Controllers.StreetController.Details(System.Int32)">
+        <member name="M:WebAPI.Controllers.StreetController.GetById(System.Int32)">
             <summary>
             Detalle de una calle
             </summary>
             <response code="200">Exito</response>
             <response code="401">No autorizado</response>
-            <response code="404">Calle no encontrada</response>
+            <response code="404">No encontrado</response>
             <response code="500">Error del servidor</response>
         </member>
-        <member name="M:WebAPI.Controllers.StreetController.Create(Models.Street)">
+        <member name="M:WebAPI.Controllers.StreetController.Create(WebAPI.Models.Street)">
             <summary>
             Creacion de una calle
             </summary>
             <param name="street">Street</param>
             <response code="200">Exito</response>
-            <response code="400">La calle no tiene el formato correcto</response>
+            <response code="400">Peticion incorrecta</response>
             <response code="401">No autorizado</response>
             <response code="500">Error del servidor</response>
         </member>
-        <member name="M:WebAPI.Controllers.StreetController.Edit(System.Int32,Models.Street)">
+        <member name="M:WebAPI.Controllers.StreetController.Update(System.Int32,WebAPI.Models.Street)">
             <summary>
             Editar una calle
             </summary>
             <param name="id">Street</param>
             <param name="street">Street</param>
             <response code="200">Exito</response>
-            <response code="400">La calle no tiene el formato correcto</response>
+            <response code="400">Peticion incorrecta</response>
             <response code="401">No autorizado</response>
-            <response code="404">Calle no encontrada</response>
+            <response code="404">No encontrado</response>
             <response code="500">Error del servidor</response>
         </member>
         <member name="M:WebAPI.Controllers.StreetController.Delete(System.Int32)">
@@ -49,7 +49,7 @@
             </summary>
             <response code="200">Exito</response>
             <response code="401">No autorizado</response>
-            <response code="404">Calle no encontrada</response>
+            <response code="404">No encontrado</response>
             <response code="500">Error del servidor</response>
         </member>
         <member name="M:WebAPI.Controllers.UserController.Login(System.String,System.String)">
@@ -59,6 +59,11 @@
             <response code="200">Exito</response>
             <response code="400">Peticion incorrecta</response>
             <response code="500">Error del servidor</response>
+        </member>
+        <member name="M:WebAPI.Controllers.UserController.RefreshToken">
+            <summary>
+            Uso de testeo
+            </summary>
         </member>
         <member name="M:WebAPI.Controllers.WeatherForecastController.Get">
             <summary>

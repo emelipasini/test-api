@@ -8,7 +8,6 @@ using System.Text;
 
 using Swashbuckle.AspNetCore.Filters;
 
-using WebAPI.Contracts;
 using WebAPI.Services;
 
 namespace WebAPI
@@ -27,7 +26,8 @@ namespace WebAPI
             services.AddControllers();
             services.AddEndpointsApiExplorer();
 
-            services.AddScoped<IStreetService, StreetService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddHttpClient<IUserService, UserService>();
 
             var connectionString = Configuration["ConnectionStrings:Connection"];
             services.AddDbContext<APIDbContext>(options =>

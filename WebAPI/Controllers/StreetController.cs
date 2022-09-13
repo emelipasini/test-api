@@ -2,23 +2,20 @@
 using Microsoft.AspNetCore.Mvc;
 
 using WebAPI.Models;
-using WebAPI.Contracts;
 
 namespace WebAPI.Controllers
 {
     [Route("streets")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class StreetController : ControllerBase
     {
-        private readonly IStreetService _service;
         public readonly string Entity = "Streets";
 
         private readonly APIDbContext context;
-        public StreetController(APIDbContext context, IStreetService service)
+        public StreetController(APIDbContext context)
         {
             this.context = context;
-            _service = service;
         }
 
         [NonAction]

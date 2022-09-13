@@ -4,12 +4,50 @@
         <name>WebAPI</name>
     </assembly>
     <members>
+        <member name="M:WebAPI.Controllers.AppleController.FindById(System.Int32)">
+            <summary>
+            Buscar una manzana por id
+            </summary>
+            <response code="200">Exito</response>
+            <response code="400">Peticion incorrecta</response>
+            <response code="401">No autorizado</response>
+            <response code="403">Prohibido</response>
+            <response code="404">No encontrado</response>
+            <response code="500">Error del servidor</response>
+        </member>
+        <member name="M:WebAPI.Controllers.AppleController.FindByDate(System.String)">
+            <summary>
+            Buscar manzanas mayores a una fecha
+            </summary>
+            <param name="date">Formato: AAAA-MM-DD</param>
+            <response code="200">Exito</response>
+            <response code="400">Peticion incorrecta</response>
+            <response code="401">No autorizado</response>
+            <response code="403">Prohibido</response>
+            <response code="404">No encontrado</response>
+            <response code="500">Error del servidor</response>
+        </member>
+        <member name="M:WebAPI.Controllers.AuthController.Login(System.String,System.String)">
+            <summary>
+            Logueo de usuario
+            </summary>
+            <response code="200">Exito</response>
+            <response code="400">Peticion incorrecta</response>
+            <response code="500">Error del servidor</response>
+        </member>
+        <member name="M:WebAPI.Controllers.AuthController.RefreshToken">
+            <summary>
+            Uso de testeo
+            </summary>
+            <response code="200">Exito</response>
+        </member>
         <member name="M:WebAPI.Controllers.StreetController.GetAll">
             <summary>
             Listado de calles
             </summary>
             <response code="200">Exito</response>
             <response code="401">No autorizado</response>
+            <response code="403">Prohibido</response>
             <response code="500">Error del servidor</response>
         </member>
         <member name="M:WebAPI.Controllers.StreetController.GetById(System.Int32)">
@@ -18,6 +56,7 @@
             </summary>
             <response code="200">Exito</response>
             <response code="401">No autorizado</response>
+            <response code="403">Prohibido</response>
             <response code="404">No encontrado</response>
             <response code="500">Error del servidor</response>
         </member>
@@ -29,6 +68,7 @@
             <response code="200">Exito</response>
             <response code="400">Peticion incorrecta</response>
             <response code="401">No autorizado</response>
+            <response code="403">Prohibido</response>
             <response code="500">Error del servidor</response>
         </member>
         <member name="M:WebAPI.Controllers.StreetController.Update(System.Int32,WebAPI.Models.Street)">
@@ -40,6 +80,7 @@
             <response code="200">Exito</response>
             <response code="400">Peticion incorrecta</response>
             <response code="401">No autorizado</response>
+            <response code="403">Prohibido</response>
             <response code="404">No encontrado</response>
             <response code="500">Error del servidor</response>
         </member>
@@ -49,21 +90,9 @@
             </summary>
             <response code="200">Exito</response>
             <response code="401">No autorizado</response>
+            <response code="403">Prohibido</response>
             <response code="404">No encontrado</response>
             <response code="500">Error del servidor</response>
-        </member>
-        <member name="M:WebAPI.Controllers.UserController.Login(System.String,System.String)">
-            <summary>
-            Logueo de usuario
-            </summary>
-            <response code="200">Exito</response>
-            <response code="400">Peticion incorrecta</response>
-            <response code="500">Error del servidor</response>
-        </member>
-        <member name="M:WebAPI.Controllers.UserController.RefreshToken">
-            <summary>
-            Uso de testeo
-            </summary>
         </member>
         <member name="M:WebAPI.Controllers.WeatherForecastController.Get">
             <summary>

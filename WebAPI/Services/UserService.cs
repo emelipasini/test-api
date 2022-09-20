@@ -5,7 +5,6 @@ namespace WebAPI.Services
     public interface IUserService
     {
         public Task<List<User>> GetAll();
-
     }
 
     public class UserService : IUserService

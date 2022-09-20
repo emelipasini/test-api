@@ -4,6 +4,17 @@
         <name>WebAPI</name>
     </assembly>
     <members>
+        <member name="M:WebAPI.Controllers.AppleController.FindById(System.Int32)">
+            <summary>
+            Buscar una manzana por id
+            </summary>
+            <response code="200">Exito</response>
+            <response code="400">Peticion incorrecta</response>
+            <response code="401">No autorizado</response>
+            <response code="403">Prohibido</response>
+            <response code="404">No encontrado</response>
+            <response code="500">Error del servidor</response>
+        </member>
         <member name="M:WebAPI.Controllers.AuthController.Login(System.String,System.String)">
             <summary>
             Logueo de usuario

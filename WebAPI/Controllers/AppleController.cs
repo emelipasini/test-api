@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-using System.Text.Json;
-
-using WebAPI.Models;
+using WebAPI.Services;
 
 namespace WebAPI.Controllers
 {
@@ -12,12 +10,11 @@ namespace WebAPI.Controllers
     //[Authorize]
     public class AppleController : Controller
     {
-        private readonly IConfiguration Configuration;
-        static readonly HttpClient client = new();
+        private readonly IAppleService _appleService;
 
-        public AppleController(IConfiguration configuration)
+        public AppleController(IAppleService appleService)
         {
-            Configuration = configuration;
+            _appleService = appleService;
         }
 
         /// <summary>
@@ -34,72 +31,18 @@ namespace WebAPI.Controllers
         {
             try
             {
-                string url = $"{Configuration["Callings:apples"]}&CQL_Filter=(id={id})";
-                var response = await client.GetStringAsync(url);
-                if (response != null)
+                var apple = await _appleService.FindById(id);
+                if (apple.features.Any())
                 {
-                    var apple = JsonSerializer.Deserialize<GeoserverResponse<Apple>>(response);
-
-                    if (apple?.features.Length > 0)
-                    {
-                        return Ok(apple);
-                    }
-                    else
-                    {
-                        return NotFound("La manzana no existe");
-                    }
+                    return Ok(apple);
                 }
-                else
-                {
-                    return BadRequest("Peticion incorrecta");
-                }
+                return NotFound();
             }
             catch (Exception err)
             {
-                return Problem("Hubo un error al obtener la manzana. " + err.Message);
+                return Problem($"Ha ocurrido un error. {err.Message}");
             }
-        }
-
-        /// <summary>
-        /// Buscar manzanas mayores a una fecha
-        /// </summary>
-        /// <param name="date">Formato: AAAA-MM-DD</param>
-        /// <response code="200">Exito</response>
-        /// <response code="400">Peticion incorrecta</response>
-        /// <response code="401">No autorizado</response>
-        /// <response code="403">Prohibido</response>
-        /// <response code="404">No encontrado</response>
-        /// <response code="500">Error del servidor</response>
-        [HttpGet("date")]
-        async public Task<IActionResult> FindByDate(string date)
-        {
-            try
-            {
-                string url = $"{Configuration["Callings:apples"]}&CQL_Filter=(fecha_modif AFTER {date}T00:00:00)";
-
-                var response = await client.GetStringAsync(url);
-                if (response != null)
-                {
-                    var apple = JsonSerializer.Deserialize<GeoserverResponse<Apple>>(response);
-
-                    if (apple?.features.Length > 0)
-                    {
-                        return Ok(apple);
-                    }
-                    else
-                    {
-                        return NotFound("No hay manzanas modificadas despues de esa fecha.");
-                    }
-                }
-                else
-                {
-                    return BadRequest("Peticion incorrecta");
-                }
-            }
-            catch (Exception err)
-            {
-                return Problem("Hubo un error al obtener las manzanas " + err.Message);
-            }
-        }
+        } 
     }
 }
+

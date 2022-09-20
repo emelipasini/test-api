@@ -25,7 +25,7 @@ namespace Tests.System.Controllers
         }
 
         [Fact]
-        public async void Get_OnSuccess_InvokesStreetService()
+        public async void Get_OnSuccess_InvokesUserService()
         {
             // Arrange
             var mock = new Mock<IUserService>();

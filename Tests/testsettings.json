@@ -1,0 +1,23 @@
+﻿{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AppSettings": {
+    "SecretKey": "5d6aa8ba68289f13d4d990576581a621",
+    "Issuer": "https://localhost:44322",
+    "Audience": "https://localhost:44322",
+    "TokenExpiry": 600000,
+    "Schema": "super"
+  },
+  "ConnectionStrings": {
+    "Connection": "User ID=eme;Password=Eme2022$;Host=localhost;Port=5432;Database=super;Pooling=true;"
+  },
+  "Callings": {
+    "login": "http://dgccte.gsystems.com.ar/QA/corrientes/web.api/api/seguridadservice/loginusuario",
+    "apples": "https://dgccte.gsystems.com.ar/geoserver/SUPER_DEV/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=SUPER_DEV:vw_siga_manzanas&outputFormat=application/json"
+  }
+}
+

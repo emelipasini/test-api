@@ -4,6 +4,7 @@ using System.Net;
 using Newtonsoft.Json;
 using Moq;
 using Moq.Protected;
+using WebAPI.Models;
 
 namespace Tests.Helpers
 {
@@ -26,6 +27,40 @@ namespace Tests.Helpers
             return hanlderMock;
         }
 
+        internal static Mock<HttpMessageHandler> SetupBasicGetGeoserverResourceList(GeoserverResponse<T> expectedResponse)
+        {
+            var mockResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(expectedResponse))
+            };
+            var mediaType = new Http.Headers.MediaTypeHeaderValue("application/json");
+            mockResponse.Content.Headers.ContentType = mediaType;
+
+            var hanlderMock = new Mock<HttpMessageHandler>();
+            hanlderMock.Protected().Setup<Task<HttpResponseMessage>>(
+                "SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>()
+            ).ReturnsAsync(mockResponse);
+
+            return hanlderMock;
+        }
+
+        internal static Mock<HttpMessageHandler> SetupReturns404(GeoserverResponse<T> expectedResponse)
+        {
+            var mockResponse = new HttpResponseMessage(HttpStatusCode.NotFound)
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(expectedResponse))
+            };
+            var mediaType = new Http.Headers.MediaTypeHeaderValue("application/json");
+            mockResponse.Content.Headers.ContentType = mediaType;
+
+            var hanlderMock = new Mock<HttpMessageHandler>();
+            hanlderMock.Protected().Setup<Task<HttpResponseMessage>>(
+                "SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>()
+            ).ReturnsAsync(mockResponse);
+
+            return hanlderMock;
+        }
+        
         internal static Mock<HttpMessageHandler> SetupReturns404()
         {
             var mockResponse = new HttpResponseMessage(HttpStatusCode.NotFound)
@@ -44,3 +79,4 @@ namespace Tests.Helpers
         }
     }
 }
+

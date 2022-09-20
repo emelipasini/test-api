@@ -27,7 +27,10 @@ namespace WebAPI
             services.AddEndpointsApiExplorer();
 
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IAppleService, AppleService>();
+
             services.AddHttpClient<IUserService, UserService>();
+            services.AddHttpClient<IAppleService, AppleService>();
 
             var connectionString = Configuration["ConnectionStrings:Connection"];
             services.AddDbContext<APIDbContext>(options =>

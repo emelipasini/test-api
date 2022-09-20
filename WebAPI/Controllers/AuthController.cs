@@ -20,10 +20,10 @@ namespace WebAPI.Controllers
             Configuration = configuration;
         }
 
-        public static List<User> AllUsers = new List<User>
+        private static readonly List<User> AllUsers = new()
         {
-            new User(1, "david", "david2022"),
-            new User(2, "agustin", "agustin2022"),
+            new User(1, "david", "david"),
+            new User(2, "agustin", "agustin"),
         };
 
         /// <summary>
@@ -67,11 +67,11 @@ namespace WebAPI.Controllers
 
         private string BuildJWTToken()
         {
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:SecretKey"]));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["AppSettings:SecretKey"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var issuer = Configuration["AppSettings:Issuer"];
             var audience = Configuration["AppSettings:Audience"];
-            var jwtValidity = DateTime.Now.AddMinutes(Convert.ToDouble(Configuration["JWT:TokenExpiry"]));
+            var jwtValidity = DateTime.Now.AddMinutes(Convert.ToDouble(Configuration["AppSettings:TokenExpiry"]));
 
             var token = new JwtSecurityToken(issuer,
               audience,

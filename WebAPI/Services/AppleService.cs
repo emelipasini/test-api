@@ -5,6 +5,7 @@ namespace WebAPI.Services
     public interface IAppleService
     {
         public Task<GeoserverResponse<Apple>> FindById(int id);
+        public Task<GeoserverResponse<Apple>> FindByDate(string date);
     }
 
     public class AppleService : IAppleService
@@ -26,7 +27,7 @@ namespace WebAPI.Services
                 var response = await _httpClient.GetAsync(url);
                 if(response.StatusCode == System.Net.HttpStatusCode.NotFound)
                 {
-                    return new GeoserverResponse<Apple>();
+                    return new GeoserverResponse<Apple>() { features = new List<Feature<Apple>>() };
                 }
                 var responseContent = response.Content;
                 var apple = await responseContent.ReadFromJsonAsync<GeoserverResponse<Apple>>();
@@ -34,12 +35,37 @@ namespace WebAPI.Services
                 {
                     return apple;
                 }
-                return new GeoserverResponse<Apple>();
+                return new GeoserverResponse<Apple>() { features = new List<Feature<Apple>>() };
             }
             catch (Exception err)
             {
                 Console.Write($"Ha ocurrido un error. {err.Message}");
-                return new GeoserverResponse<Apple>();
+                return new GeoserverResponse<Apple>() { features = new List<Feature<Apple>>() };
+            }
+        }
+
+        public async Task<GeoserverResponse<Apple>> FindByDate(string date)
+        {
+            try
+            {
+                string url = $"{Configuration["Callings:apples"]}&CQL_Filter=(fecha_modif AFTER {date})";
+                var response = await _httpClient.GetAsync(url);
+                if(response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    return new GeoserverResponse<Apple>() { features = new List<Feature<Apple>>() };
+                }
+                var responseContent = response.Content;
+                var apples = await responseContent.ReadFromJsonAsync<GeoserverResponse<Apple>>();
+                if(apples != null)
+                {
+                    return apples;
+                }
+                return new GeoserverResponse<Apple>() { features = new List<Feature<Apple>>() };
+            }
+            catch (Exception err)
+            {
+                Console.Write($"Ha ocurrido un error. {err.Message}");
+                return new GeoserverResponse<Apple>() { features = new List<Feature<Apple>>() };
             }
         }
     }

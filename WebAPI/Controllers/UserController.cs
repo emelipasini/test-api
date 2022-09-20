@@ -22,7 +22,7 @@ namespace WebAPI.Controllers
             {
                 return Ok(users);
             }
-            return NotFound();
+            return NotFound("No se econtraron registros");
         }
     }
 }

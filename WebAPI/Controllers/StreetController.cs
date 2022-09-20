@@ -7,7 +7,7 @@ namespace WebAPI.Controllers
 {
     [Route("streets")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class StreetController : ControllerBase
     {
         public readonly string Entity = "Streets";

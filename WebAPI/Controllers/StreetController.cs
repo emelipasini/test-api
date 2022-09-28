@@ -1,56 +1,45 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+using WebAPI.Services;
 using WebAPI.Models;
 
 namespace WebAPI.Controllers
 {
-    [Route("streets")]
     [ApiController]
+    [Route("streets")]
     [Authorize]
     public class StreetController : ControllerBase
     {
-        public readonly string Entity = "Streets";
+        private readonly IStreetService _streetService;
 
-        private readonly APIDbContext context;
-        public StreetController(APIDbContext context)
+        public StreetController(IStreetService streetService)
         {
-            this.context = context;
-        }
-
-        [NonAction]
-        private void AddLog(string action, string message)
-        {
-            try
-            {
-                int lastId = context.Logs.Max(p => p.Id);
-                context.Logs.Add(new Log(lastId + 1, Entity, action, message));
-                context.SaveChanges();
-            }
-            catch (Exception err)
-            {
-                Console.WriteLine(err.Message);
-            }
+            _streetService = streetService;
         }
 
         /// <summary>
         /// Listado de calles
         /// </summary>
         /// <response code="200">Exito</response>
+        /// <response code="204">No hay contenido</response>
         /// <response code="401">No autorizado</response>
         /// <response code="403">Prohibido</response>
         /// <response code="500">Error del servidor</response>
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
             try
             {
-                var streets = context.Streets.ToList();
-                return Ok(streets);
+                var streets = await _streetService.GetAll();
+                if(streets.Count > 0)
+                {
+                    return Ok(streets);
+                }
+                return NoContent();
             }
-            catch(Exception err)
+            catch (Exception err)
             {
-                AddLog("GetAll", err.Message);
                 return Problem($"Hubo un error al completar la transaccion. {err}");
             }
         }
@@ -64,20 +53,23 @@ namespace WebAPI.Controllers
         /// <response code="404">No encontrado</response>
         /// <response code="500">Error del servidor</response>
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
             try
             {
-                var street = context.Streets.FirstOrDefault(x => x.Id == id);
-                if (street != null)
+                if(ModelState.IsValid && id != 0)
                 {
-                    return Ok(street);
+                    var street = await _streetService.GetById(id);
+                    if(street.Name != null)
+                    {
+                        return Ok(street);
+                    }
+                    return NotFound($"No existe el registro con id: {id}");
                 }
-                return NotFound($"No existe el registro con id: {id}.");
+                return BadRequest("Peticion incorrecta");
             }
             catch (Exception err)
             {
-                AddLog("GetDetail", err.Message);
                 return Problem($"Hubo un error al completar la transaccion. {err}");
             }
         }
@@ -92,21 +84,22 @@ namespace WebAPI.Controllers
         /// <response code="403">Prohibido</response>
         /// <response code="500">Error del servidor</response>
         [HttpPost]
-        public IActionResult Create(Street street)
+        public async Task<IActionResult> Create(Street street)
         {
             try
             {
-                if (ModelState.IsValid)
+                if (ModelState.IsValid && street != null)
                 {
-                    context.Streets.Add(street);
-                    context.SaveChanges();
-                    return Ok(street);
+                    var newStreet = await _streetService.Create(street);
+                    if(newStreet.Name != null)
+                    {
+                        return Ok(newStreet);
+                    }
                 }
                 return BadRequest("Peticion incorrecta");
             }
             catch(Exception err)
             {
-                AddLog("Create", err.Message);
                 return Problem($"Hubo un error al completar la transaccion. {err}");
             }
         }
@@ -114,7 +107,6 @@ namespace WebAPI.Controllers
         /// <summary>
         /// Editar una calle
         /// </summary>
-        /// <param name="id">Street</param>
         /// <param name="street">Street</param>
         /// <response code="200">Exito</response>
         /// <response code="400">Peticion incorrecta</response>
@@ -122,29 +114,24 @@ namespace WebAPI.Controllers
         /// <response code="403">Prohibido</response>
         /// <response code="404">No encontrado</response>
         /// <response code="500">Error del servidor</response>
-        [HttpPut("{id}")]
-        public IActionResult Update(int id, Street street)
+        [HttpPut]
+        public async Task<IActionResult> Update(Street street)
         {
             try
             {
-                if (ModelState.IsValid)
+                if(ModelState.IsValid && street != null)
                 {
-                    var streetToEdit = context.Streets.FirstOrDefault(x => x.Id == id);
-                    if(streetToEdit != null)
+                    var streetToEdit = await _streetService.Update(street);
+                    if(streetToEdit.Name != null)
                     {
-                        streetToEdit.Name = street.Name;
-                        streetToEdit.City = street.City;
-                        context.SaveChanges();
-
-                        return Ok(street);
+                        return Ok(streetToEdit);
                     }
-                    return NotFound($"No existe el registro con id: {id}.");
+                    return NotFound($"No existe el registro con id: {street.Id}.");
                 }
                 return BadRequest("Peticion incorrecta");
             }
             catch(Exception err)
             {
-                AddLog("Update", err.Message);
                 return Problem($"Hubo un error al completar la transaccion. {err}");
             }
         }
@@ -158,24 +145,26 @@ namespace WebAPI.Controllers
         /// <response code="404">No encontrado</response>
         /// <response code="500">Error del servidor</response>
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
-                var streetToDelete = context.Streets.FirstOrDefault(x => x.Id == id);
-                if (streetToDelete != null)
+                if(ModelState.IsValid && id != 0)
                 {
-                    context.Streets.Remove(streetToDelete);
-                    context.SaveChanges();
-                    return Ok(streetToDelete);
+                    var streetToDelete = await _streetService.Delete(id);
+                    if (streetToDelete)
+                    {
+                        return Ok("Registro eliminado");
+                    }
+                    return NotFound($"No existe el registro con id: {id}.");
                 }
-                return NotFound($"No existe el registro con id: {id}");
+                return BadRequest("Peticion incorrecta");
             }
             catch (Exception err)
             {
-                AddLog("Delete", err.Message);
                 return Problem($"Hubo un error al completar la transaccion. {err}");
             }
         }
     }
 }
+

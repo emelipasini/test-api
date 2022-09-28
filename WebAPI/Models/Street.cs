@@ -14,13 +14,6 @@ namespace WebAPI.Models
         [Required]
         [StringLength(50, MinimumLength = 3)]
         public string City { get; set; }
-
-        public Street(int id, string name, string city)
-        {
-            Id = id;
-            Name = name;
-            City = city;
-        }
     }
 }
 

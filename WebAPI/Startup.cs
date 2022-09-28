@@ -26,16 +26,17 @@ namespace WebAPI
             services.AddControllers();
             services.AddEndpointsApiExplorer();
 
-            services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IAppleService, AppleService>();
-
-            services.AddHttpClient<IUserService, UserService>();
-            services.AddHttpClient<IAppleService, AppleService>();
-
             var connectionString = Configuration["ConnectionStrings:Connection"];
             services.AddDbContext<APIDbContext>(options =>
                 options.UseNpgsql(connectionString)
             );
+
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IAppleService, AppleService>();
+            services.AddTransient<IStreetService, StreetService>();
+
+            services.AddHttpClient<IUserService, UserService>();
+            services.AddHttpClient<IAppleService, AppleService>();
 
             var key = Encoding.ASCII.GetBytes(Configuration["AppSettings:SecretKey"]);
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
